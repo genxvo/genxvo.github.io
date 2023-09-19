@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="description" content="XVO: Generalized Visual Odometry via Cross-Modal Self-Training">
+  <meta name="keywords" content="XVO: Generalized Visual Odometry">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>XVO: Generalized Visual Odometry via Cross-Modal Self-Training</title>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="shortcut icon" href="./xvo.ico">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+
+  <meta property="og:site_name" content="CaT: Coaching a Teachable Student" />
+  <meta property="og:type" content="video.other" />
+  <meta property="og:title" content="CaT: Coaching a Teachable Student" />
+  <meta property="og:description" content="Zhang, et al. CaT: Coaching a Teachable Student." />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="CaT: Coaching a Teachable Student" />
+  <meta name="twitter:description" content="Zhang, et al. CaT: Coaching a Teachable Student." />
+
+  <script src="https://www.youtube.com/iframe_api"></script>
+</head>
+
+<body>
+
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <h1 class="title is-1 publication-title">CaT: Coaching a Teachable Student</h1>
+            <div class="is-size-5 publication-authors">
+              <span class="author-block">
+                <a href="https://cs-people.bu.edu/leilai/">Lei Lai*</a>&emsp;
+                <a href="https://www.linkedin.com/in/zhongkai-leon-shangguan-52b465152">Zhongkai Shangguan*</a>&emsp;
+                <a href="https://jimuyangz.github.io/">Jimuyang Zhang</a>&emsp;
+                <a href="https://eshed1.github.io/">Eshed Ohn-Bar</a>&emsp;
+                <br />Boston University
+                <span class="brmod"></span>ICCV 2023</span>
+            </div>
+
+            <div class="column has-text-centered">
+              <div class="publication-links">
+                <!-- PDF Link. -->
+                <span class="link-block">
+                  <a href="./resources/XVO.pdf" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                    </span>
+                    <span>Paper</span>
+                  </a>
+                </span>
+                <!-- <span class="link-block">
+                  <a href="http://arxiv.org/abs/2306.10014" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                    </span>
+                    <span>arXiv</span>
+                  </a>
+                </span> -->
+                <!-- Video Link. -->
+                <!-- <span class="link-block">
+                  <a href="#method_video" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="fab fa-youtube"></i>
+                    </span>
+                    <span>Video</span>
+                  </a>
+                </span> -->
+                <!-- Code Link. -->
+                <span class="link-block">
+                  <a href="https://github.com/h2xlab/XVO" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="fab fa-github"></i>
+                    </span>
+                    <span>Code</span>
+                  </a>
+                </span>
+                <!-- Slides Link. -->
+                <!-- <span class="link-block">
+                <a href="TODO"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fas fa-file-powerpoint"></i>
+                  </span>
+                  <span>Slides</span>
+                  </a>
+              </span> -->
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- <section class="hero teaser">
+  <div class="hero-body">
+    <div class="columns is-centered">
+      <div class="column is-6">
+        <img src="./resources/example1.gif" />
+        <h2 class="subtitle has-text-centered">
+        </h2>
+      </div>
+    </div>
+  </div>
+</section>
+ -->
+
+
+  <section class="section">
+    <div class="container">
+
+      <!-- Abstract. -->
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-two-thirds">
+          <h2 class="title is-3">Abstract</h2>
+          <div class="content has-text-justified">
+            <p>
+              We propose XVO, a semi-supervised learning method for training generalized 
+              monocular Visual Odometry (VO) models with robust off-the-self operation 
+              across diverse datasets and settings. In contrast to standard monocular 
+              VO approaches which often study a known calibration within a single dataset, 
+              XVO efficiently learns to recover relative pose with real-world scale from 
+              visual scene semantics, i.e., without relying on any known camera parameters.
+               We optimize the motion estimation model via self-training from large amounts 
+               of unconstrained and heterogeneous dash camera videos available on YouTube. 
+               Our key contribution is twofold. First, we empirically demonstrate the benefits 
+               of semi-supervised training for learning a general-purpose direct VO regression
+                network. Second, we demonstrate multi-modal supervision, including segmentation, 
+                flow, depth, and audio auxiliary prediction tasks, to facilitate generalized 
+                representations for the VO task. Specifically, we find audio prediction task 
+                to significantly enhance the semi-supervised learning process while alleviating 
+                noisy pseudo-labels, particularly in highly dynamic and out-of-domain video data.
+                 Our proposed teacher network achieves state-of-the-art performance on the commonly
+                  used KITTI benchmark despite no multi-frame optimization or knowledge of camera 
+                  parameters. Combined with the proposed semi-supervised step, XVO demonstrates 
+                  off-the-shelf knowledge transfer across diverse conditions on KITTI, nuScenes, 
+                  and Argoverse without fine-tuning. 
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Paper video. -->
+    <!-- <br />
+    <br />
+    <div id="method_video" class="columns is-centered has-text-centered">
+      <div class="column is-half">
+        <h2 class="title is-3">Video</h2>
+        <div class="publication-video"> -->
+          <!-- <video controls>
+            <source src="./resources/CaT_Video.mp4" type="video/mp4">
+          </video> -->
+          <!-- <iframe src="https://www.youtube.com/embed/5tmkDHfgqvU"
+                frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        </div>
+      </div>
+    </div> -->
+    <!--/ Paper video. -->
+
+  </section>
+
+
+  <section class="section">
+    <div class="container">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3">Motivation</h2>
+          <div class="content has-text-justified">
+            <p>
+              <!-- Our approach is motivated by humans' ability to flexibly estimate motion 
+              in arbitrary conditions through a general understanding of salient scene 
+              properties (e.g., object sizes).
+              This general understanding is developed over large amounts of perceptual 
+              data, often multi-modal in nature. For instance, cross-modal information 
+              processing between audio and video has been shown to play a role in spatial 
+              reasoning and proprioception.
+
+              Motivated by how humans learn general representations through observation 
+              of large amounts of multimodal data, we employ multiple auxiliary prediction 
+              tasks,including segmentation, flow, depth, and audio, as part of the 
+              semi-supervised training process.
+
+              Our approach is motivated by the success of multi-task frameworks for 
+              computer vision tasks. Additional related tasks alongside the primary 
+              learning objective can enhance feature representations. -->
+
+              Our approach is inspired by the remarkable capabilities of humans to 
+              adaptively estimate motion in diverse conditions, relying on a 
+              comprehensive comprehension of salient scene characteristics, 
+              such as object sizes, honed through extensive exposure to perceptual data, 
+              often spanning multiple sensory modalities. For instance, cross-modal information 
+              processing between audio and video has been shown to play a role in spatial 
+              reasoning and proprioception. 
+              Drawing from this human learning paradigm, we adopt a strategy that leverages 
+              extensive multimodal data through a semi-supervised training process, incorporating 
+              various auxiliary prediction tasks, including segmentation, flow, depth, 
+              and audio. This approach is also underpinned by the successes witnessed 
+              in computer vision through multi-task frameworks, where supplementary 
+              tasks, in addition to the primary learning objective, serve to enrich 
+              feature representations, echoing the robustness and versatility seen 
+              in human perceptual learning.
+            </p>
+            <div class="column">
+              <img src="./resources/lbc_diagram.png" />
+            </div>
+
+            <!-- <div class="content has-text-centered">
+              <i>Chen, et al. CoRL 2020</i>
+            </div> -->
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3">Method</h2>
+          <div class="content has-text-justified">
+            Our initial teacher model (used for pseudo-labeling and filtering) encodes two 
+            concatenated image frames and predicts relative camera pose and its uncertainty. 
+            The complete cross-modal architecture leverages a similar architecture but with 
+            added auxiliary prediction branches with complementary tasks that can further 
+            guide self-training, e.g., prediction branches for audio reconstruction, 
+            dynamic object segmentation, optical flow, and depth.
+
+            </div>
+            <div class="column">
+              <img src="./resources/approach_overview.png" width="80%" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3">Model</h2>
+          <div class="content has-text-justified">
+            
+
+            </div>
+            <div class="column">
+              <img src="./resources/model_structure.png" width="80%" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+      <!-- <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-4" align="left">Effective Teacher</h2>
+          <div class="content has-text-justified">
+            Given the low performance of prior privileged agents, the teacher could benefit from more <b>explicit
+            safety-driven cues in the BEV</b>. We propose to add two types of channels of predicted agents’ future and
+            entity attention. We first utilize a kinematics bicycle model to predict future trajectories of dynamic
+            objects, which enables us to iteratively predict and represent short-term future position, orientation, and
+            speed of agent. Then, we encode an explicit attention channel for highlighting potential future infractions.
+            Our boosted teacher agent even improves over the rule-based expert.
+
+          </div>
+          <div class="column">
+            <img src="./resources/bev_figure.png" width="80%" />
+          </div>
+        </div>
+      </div>
+
+
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-4" align="left">Teachable student via Alignment</h2>
+          <div class="content has-text-justified">
+            Due to the difference between inputs and modeling capacities, it can be difficult to align the image-based
+            student features and output with the BEV-based privileged teacher. Therefore, we proposed an <b>IPM-based
+              transformer alignment module</b> that can facilitate direct distillation of most of the teacher’s features
+            and better
+            guide the student learning process.
+          </div>
+          <div class="column">
+            <img src="./resources/figure1_crop.png" width="80%" />
+          </div>
+        </div>
+      </div>
+
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-4" align="left">Student-paced Coaching</h2>
+          <div class="content has-text-justified">
+            To better consider the learning ability of the student, we gradually coach the student with a student-paced
+            coaching mechanism. Specifically, we interpolate between teacher features and student features on samples
+            that the student performed poorly (i.e. higher loss). This effectively adjusts the learning rate in a
+            sample-selective manner, which aims to stabilize training by reducing the difficulty when the student is
+            unable to perform the optimal action.
+          </div>
+
+          <div class="column">
+            <img src="./resources/student_pace.png" width="50%" />
+          </div>
+
+        </div>
+      </div>
+
+
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-4" align="left">Model Architecture of CaT</h2>
+          <div class="content has-text-justified">
+            <p>
+              Our proposed CaT framework
+              enables highly effective knowledge transfer between a privileged
+              teacher and a sensorimotor (i.e., image-based) student.
+
+              Specifically, we first sample queries using a spatial parameterization of the BEV space and process them
+              with a self-attention module. Then, a deformable cross-attention module is applied to populate the
+              student’s BEV features.
+
+              The residual blocks following the alignment module can consequently facilitate knowledge transfer via
+              direct distillation of most of the teacher’s features.
+
+
+              Our optimization objective for guiding the distillation process is a weighted sum over both distillation
+              and auxiliary tasks, including output distillation loss, feature distillation loss, segmentation loss and
+              command prediction loss.
+            </p>
+            <div class="column">
+              <img src="./resources/method.png" />
+            </div>
+
+          </div>
+        </div>
+      </div> -->
+
+
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3">Result</h2>
+          <div class="content has-text-justified">
+            <b>Analysis on the KITTI Benchmark.</b> 
+            We abbreviate 'intrinsics-free' as I (i.e., a method which does not assume the intrinsics) 
+            and 'real-world scale' as S (i.e., a method is able to recover real-world scale). To ensure 
+            meaningful comparison, we categorize models based on supervision type. Firstly, we present 
+            unsupervised learning methods, followed by supervised learning methods, then generalized VO 
+            methods, and finally our XVO ablation. In the case of TartanVO, we analyze robustness to 
+            noise applied to the intrinsics. We train two teacher models: one based on KITTI (as shown 
+            in supervised learning approaches) and the other on nuScenes (as displayed at the end of 
+            the Table with ablations).
+          </div>
+          <div class="column">
+            <img src="./resources/result1.png" width="80%" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3">Result</h2>
+          <div class="content has-text-justified">
+            <b>Average Quantitative Results across Datasets.</b> 
+            We test on KITTI (sequences 00-10), Argoverse 2, and the unseen regions in nuScenes. 
+            All results are the average over all scenes. We present translation error, rotation 
+            error and scale error. Approaches such as TartanVO do not estimate real-world scale 
+            but may be aligned with ground truth (GT) scale in evaluation. A, S, F, D are the 
+            abbreviation of Audio, Seg, Flow, Depth.
+          </div>
+          <div class="column">
+            <img src="./resources/result2.png" width="80%" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3">Result</h2>
+          <div class="content has-text-justified">
+            <b>Qualitative Analysis on KITTI..</b> 
+            We find that incorporating audio and segmentation tasks as part of the semi-supervised learning process significantly improves ego-pose estimation on KITTI.
+          </div>
+          <div class="column">
+            <img src="./resources/qua_result.png" width="80%" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- <section class="section id=" BibTeX"">
+    <div class="container">
+      <div class="columns is-centered has-text-centered">
+        <div class="column">
+          <h2 class="title is-3">BibTeX</h2>
+          <div class="content has-text-justified">
+            <pre><code>@inproceedings{zhang2023coaching,
+                                title={Coaching a Teachable Student},
+                                author={Zhang, Jimuyang and Huang, Zanming and Ohn-Bar, Eshed},
+                                booktitle={CVPR},
+                                year={2023}
+                        }</code></pre>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </section> -->
+
+  <section class="section id=" BibTeX"">
+    <div class="container">
+      <div class="columns is-centered has-text-centered">
+        <div class="column">
+          <h2 class="title is-3">Acknowledgments</h2>
+          <div class="content has-text-centered">
+            We thank the Red Hat Collaboratory and National Science Foundation (IIS-2152077) for supporting this research.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <footer class="footer">
+    <div class="container">
+      <div class="content has-text-centered">
+        <a href="./resources/XVO.pdf" class="large-font bottom_buttons">
+          <i class="fas fa-file-pdf"></i>
+        </a>
+        <a href="https://github.com/h2xlab/XVO" class="large-font bottom_buttons">
+          <i class="fab fa-github"></i>
+        </a>
+        <br />
+        <p>Page template borrowed from <a href="https://https://catdrive.github.io/"><span class="dnerf">CaT</span></a>
+      </div>
+    </div>
+  </footer>
+
+</body>
+
+</html>
