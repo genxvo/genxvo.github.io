@@ -261,24 +261,41 @@
           </div>
         </div>
       </div>
+      
 
-      <div class="columns is-centered has-text-centered">
-        <div class="column is-four-fifths">
-          <h2 class="title is-3">Model Structure</h2>
-          <div class="content has-text-justified">
-            Our initial teacher model (used for pseudo-labeling and filtering) encodes two 
+      <section class="section">
+        <div class="container">
+          <div class="columns is-centered has-text-centered">
+            <div class="column is-four-fifths">
+              <h2 class="title is-3">Model Structure</h2>
+              <div class="content has-text-justified">
+                Our initial teacher model (used for pseudo-labeling and filtering) encodes two 
             concatenated image frames and predicts relative camera pose and its uncertainty. 
             The complete cross-modal architecture leverages a similar architecture but with 
             added auxiliary prediction branches with complementary tasks that can further 
             guide self-training, e.g., prediction branches for audio reconstruction, 
             dynamic object segmentation, optical flow, and depth.
+              </div>
+              <div class="column">
+                <img src="./resources/model_structure.png" width="80%" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3">Model Structure</h2>
+          <div class="content has-text-justified">
+            
           </div>
             <div class="column">
               <img src="./resources/model_structure.png" width="65%" />
             </div>
           </div>
         </div>
-      </div>
+      </div> -->
 
 
 
