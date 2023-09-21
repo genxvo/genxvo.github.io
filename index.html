@@ -185,7 +185,7 @@
           <h2 class="title is-3">Motivation</h2>
           <div class="content has-text-justified">
             <p>
-              Our approach is motivated by how humans learn general representations 
+              Our approach is inspired by how humans learn general representations 
               through observation of large amouts of multi-modal data.
               Humans can flexibly estimate motion in arbitrary conditions through 
               a general understanding of salient scene properties (e.g., object sizes).
@@ -262,11 +262,16 @@
         <div class="column is-four-fifths">
           <h2 class="title is-3">Method</h2>
           <div class="content has-text-justified">
-            Our proposed framework comprises three main steps: 
+            Our proposed framework comprises the following steps: 
             (1) uncertainty-aware training of an initial (i.e., teacher) VO model; 
             (2) pseudo-labeling with the removal of low-confidence and potentially noisy samples; 
-            (3) self-training with pseudo-labeled and auxiliary prediction tasks of a robust VO student model.
-
+            (3) self-training with pseudo-labeled and auxiliary prediction tasks of a robust VO student model. 
+            Specifically, we first train an ego-motion prediction teacher model over a small initial dataset, e.g., nuScenes.
+            We then expand the original dataset through pseudo-labeling of in-the-wild videos.
+            After that, we employ multiple auxiliary prediction tasks, including segmentation, flow, depth, and audio, as part of the semi-supervised training process
+            Finally, we leverage uncertainty-based filtering of potentially noisy pseudo labels and train a robust student model.
+            
+            <!--
             <ol>
               <li>We first train an ego-motion prediction teacher model over a small initial dataset, e.g., nuScenes</li>
 
@@ -276,7 +281,8 @@
 
               <li>We leverage uncertainty-based filtering of potentially noisy pseudo labels and train a robust student model.</li>
             </ol>
-
+            -->
+            
             </div>
             <div class="column">
               <img src="./resources/approach_overview.png" width="80%" />
