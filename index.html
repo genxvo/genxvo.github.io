@@ -296,14 +296,17 @@
         <div class="container">
           <div class="columns is-centered has-text-centered">
             <div class="column is-four-fifths">
-              <h2 class="title is-3">Model Structure</h2>
+              <h2 class="title is-3">Model Architecture</h2>
               <div class="content has-text-justified">
-                Our initial teacher model (used for pseudo-labeling and filtering) encodes two 
-            concatenated image frames and predicts relative camera pose and its uncertainty. 
-            The complete cross-modal architecture leverages a similar architecture but with 
-            added auxiliary prediction branches with complementary tasks that can further 
-            guide self-training, e.g., prediction branches for audio reconstruction, 
-            dynamic object segmentation, optical flow, and depth.
+                The initial teacher model (used for pseudo-labeling and filtering) encodes two 
+                concatenated image frames and predicts relative camera pose and its uncertainty. 
+                To learn effective representations for generalized VO at scale, we propose to 
+                incorporate supervision from auxiliary but potentially complementary prediction 
+                tasks in addition to the generated VO pseudo-labels.
+                Threfore, the complete cross-modal architecture leverages a similar model architecture but with 
+                added auxiliary prediction branches with complementary tasks that can further 
+                guide self-training, e.g., prediction branches for audio reconstruction, 
+                dynamic object segmentation, optical flow, and depth.
               </div>
               <div class="column">
                 <img src="./resources/model_structure.png" width="80%" />
@@ -325,92 +328,6 @@
           </div>
         </div>
       </div> -->
-
-
-
-      <!-- <div class="columns is-centered has-text-centered">
-        <div class="column is-four-fifths">
-          <h2 class="title is-4" align="left">Effective Teacher</h2>
-          <div class="content has-text-justified">
-            Given the low performance of prior privileged agents, the teacher could benefit from more <b>explicit
-            safety-driven cues in the BEV</b>. We propose to add two types of channels of predicted agents’ future and
-            entity attention. We first utilize a kinematics bicycle model to predict future trajectories of dynamic
-            objects, which enables us to iteratively predict and represent short-term future position, orientation, and
-            speed of agent. Then, we encode an explicit attention channel for highlighting potential future infractions.
-            Our boosted teacher agent even improves over the rule-based expert.
-
-          </div>
-          <div class="column">
-            <img src="./resources/bev_figure.png" width="80%" />
-          </div>
-        </div>
-      </div>
-
-
-      <div class="columns is-centered has-text-centered">
-        <div class="column is-four-fifths">
-          <h2 class="title is-4" align="left">Teachable student via Alignment</h2>
-          <div class="content has-text-justified">
-            Due to the difference between inputs and modeling capacities, it can be difficult to align the image-based
-            student features and output with the BEV-based privileged teacher. Therefore, we proposed an <b>IPM-based
-              transformer alignment module</b> that can facilitate direct distillation of most of the teacher’s features
-            and better
-            guide the student learning process.
-          </div>
-          <div class="column">
-            <img src="./resources/figure1_crop.png" width="80%" />
-          </div>
-        </div>
-      </div>
-
-      <div class="columns is-centered has-text-centered">
-        <div class="column is-four-fifths">
-          <h2 class="title is-4" align="left">Student-paced Coaching</h2>
-          <div class="content has-text-justified">
-            To better consider the learning ability of the student, we gradually coach the student with a student-paced
-            coaching mechanism. Specifically, we interpolate between teacher features and student features on samples
-            that the student performed poorly (i.e. higher loss). This effectively adjusts the learning rate in a
-            sample-selective manner, which aims to stabilize training by reducing the difficulty when the student is
-            unable to perform the optimal action.
-          </div>
-
-          <div class="column">
-            <img src="./resources/student_pace.png" width="50%" />
-          </div>
-
-        </div>
-      </div>
-
-
-      <div class="columns is-centered has-text-centered">
-        <div class="column is-four-fifths">
-          <h2 class="title is-4" align="left">Model Architecture of CaT</h2>
-          <div class="content has-text-justified">
-            <p>
-              Our proposed CaT framework
-              enables highly effective knowledge transfer between a privileged
-              teacher and a sensorimotor (i.e., image-based) student.
-
-              Specifically, we first sample queries using a spatial parameterization of the BEV space and process them
-              with a self-attention module. Then, a deformable cross-attention module is applied to populate the
-              student’s BEV features.
-
-              The residual blocks following the alignment module can consequently facilitate knowledge transfer via
-              direct distillation of most of the teacher’s features.
-
-
-              Our optimization objective for guiding the distillation process is a weighted sum over both distillation
-              and auxiliary tasks, including output distillation loss, feature distillation loss, segmentation loss and
-              command prediction loss.
-            </p>
-            <div class="column">
-              <img src="./resources/method.png" />
-            </div>
-
-          </div>
-        </div>
-      </div> -->
-
 
     </div>
   </section>
