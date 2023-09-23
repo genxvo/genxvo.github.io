@@ -202,7 +202,7 @@
         <div class="column is-four-fifths">
           <h2 class="title is-3">Motivation</h2>
           <div class="content has-text-justified">
-            <p>
+            <p class="my-paragraph">
               Our approach is inspired by how humans learn general representations 
               through observation of large amouts of multi-modal data, 
               and the successes witnessed in computer vision 
@@ -232,7 +232,7 @@
             <div class="column">
               <img src="./resources/motivation.png" />
             </div>
-             <p>              
+             <p class="my-paragraph">             
               The figure above illustrates the importance of audio in estimating vehicle acceleration and braking.
               The frame is consistent with the red arrow marked on the waveform. On the left, the audio amplitude 
               decreases and maintains a low level when the vehicle is going to wait for traffic lights.
@@ -251,6 +251,7 @@
         <div class="column is-four-fifths">
           <h2 class="title is-3">Method</h2>
           <div class="content has-text-justified">
+            <p class="my-paragraph">
             Our proposed framework comprises the following steps: 
             (1) uncertainty-aware training of an initial (i.e., teacher) VO model; 
             (2) pseudo-labeling with the removal of low-confidence and potentially noisy samples; 
@@ -259,7 +260,7 @@
             We then expand the original dataset through pseudo-labeling of in-the-wild videos.
             After that, we employ multiple auxiliary prediction tasks, including segmentation, flow, depth, and audio, as part of the semi-supervised training process
             Finally, we leverage uncertainty-based filtering of potentially noisy pseudo labels and train a robust student model.
-            
+            </p>
             <!--
             <ol>
               <li>We first train an ego-motion prediction teacher model over a small initial dataset, e.g., nuScenes</li>
@@ -287,6 +288,7 @@
             <div class="column is-four-fifths">
               <h2 class="title is-3">Model Architecture</h2>
               <div class="content has-text-justified">
+                <p class="my-paragraph">
                 The initial teacher model (used for pseudo-labeling and filtering) encodes two 
                 concatenated image frames and predicts relative camera pose and its uncertainty. 
                 To learn effective representations for generalized VO at scale, we propose to 
@@ -296,6 +298,7 @@
                 added auxiliary prediction branches with complementary tasks that can further 
                 guide self-training, e.g., prediction branches for audio reconstruction, 
                 dynamic object segmentation, optical flow, and depth.
+                <\p>
               </div>
               <div class="column">
                 <img src="./resources/model_structure.png" width="80%" />
@@ -327,6 +330,7 @@
         <div class="column is-four-fifths">
           <h2 class="title is-3">Result</h2>
           <div class="content has-text-justified">
+            <p class="my-paragraph">
             <b>Analysis on the KITTI Benchmark.</b> 
             We abbreviate 'intrinsics-free' as I (i.e., a method which does not assume the intrinsics) 
             and 'real-world scale' as S (i.e., a method is able to recover real-world scale). To ensure 
@@ -336,6 +340,7 @@
             noise applied to the intrinsics. We train two teacher models: one based on KITTI (as shown 
             in supervised learning approaches) and the other on nuScenes (as displayed at the end of 
             the Table with ablations).
+            </p>
           </div>
           <div class="column">
             <img src="./resources/result1.png" width="90%" />
@@ -350,12 +355,14 @@
       <div class="columns is-centered has-text-centered">
         <div class="column is-four-fifths">
           <div class="content has-text-justified">
+            <p class="my-paragraph">
             <b>Average Quantitative Results across Datasets.</b> 
             We test on KITTI (sequences 00-10), Argoverse 2, and the unseen regions in nuScenes. 
             All results are the average over all scenes. We present translation error, rotation 
             error and scale error. Approaches such as TartanVO do not estimate real-world scale 
             but may be aligned with ground truth (GT) scale in evaluation. A, S, F, D are the 
             abbreviation of Audio, Seg, Flow, Depth.
+            </p>
           </div>
           <div class="column">
             <img src="./resources/result2.png" width="80%" />
@@ -370,8 +377,10 @@
       <div class="columns is-centered has-text-centered">
         <div class="column is-four-fifths">
           <div class="content has-text-justified">
+            <p class="my-paragraph">
             <b>Qualitative Analysis on KITTI..</b> 
             We find that incorporating audio and segmentation tasks as part of the semi-supervised learning process significantly improves ego-pose estimation on KITTI.
+            </p>
           </div>
           <div class="column">
             <img src="./resources/qua_result.png" width="80%" />
