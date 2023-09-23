@@ -2,6 +2,9 @@ body {
   font-family: 'Noto Sans', sans-serif;
 }
 
+.my-paragraph {
+  font-size: 18px; /* Set the desired font size (you can adjust the value) */
+}
 
 .footer a {
     /*font-size: 25px;*/
