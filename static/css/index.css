@@ -3,7 +3,8 @@ body {
 }
 
 .my-paragraph {
-  font-size: 18px; /* Set the desired font size (you can adjust the value) */
+  font-size: 18px;
+  text-indent: 2em;
 }
 
 .footer a {
