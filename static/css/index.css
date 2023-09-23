@@ -33,6 +33,9 @@ body {
 
 
 .publication-title {
+  width: 100%;
+  display: block;
+  text-align: center;
 }
 
 .publication-banner {
